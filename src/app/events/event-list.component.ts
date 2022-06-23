@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrSevice } from '../common/toastr.service';
 import { EventService } from './shared/event.service';
 
@@ -24,13 +25,17 @@ import { EventService } from './shared/event.service';
   ],
 })
 export class EventsListComponent {
-  events: any[] | undefined;
+  events: any;
   constructor(
     private eventService: EventService,
-    private toastrService: ToastrSevice
+    private toastrService: ToastrSevice,
+    private route: ActivatedRoute
   ) {}
   ngOnInit() {
-    this.events = this.eventService.getEvent();
+    // this.eventService.getEvent().subscribe((events) => {
+    //   this.events = events;
+    // });
+    this.events = this.route.snapshot.data['events'];
   }
   tellName(data: any) {
     this.toastrService.Success(data);
